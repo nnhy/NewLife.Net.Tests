@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NewLife.Log;
 using NewLife.Net;
+using NewLife.Threading;
 
 namespace EchoTest
 {
@@ -34,6 +35,7 @@ namespace EchoTest
             Console.ReadKey();
         }
 
+        static TimerX _timer;
         static NetServer _server;
         static void TestServer()
         {
@@ -46,6 +48,9 @@ namespace EchoTest
             svr.Start();
 
             _server = svr;
+
+            // 定时显示性能数据
+            _timer = new TimerX(ShowStat, svr, 100, 1000);
         }
 
         static void TestClient()
@@ -59,6 +64,10 @@ namespace EchoTest
             };
             client.Open();
 
+            // 定时显示性能数据
+            _timer = new TimerX(ShowStat, client, 100, 1000);
+
+            // 循环发送数据
             for (var i = 0; i < 5; i++)
             {
                 Thread.Sleep(1000);
@@ -68,6 +77,17 @@ namespace EchoTest
             }
 
             client.Dispose();
+        }
+
+        static void ShowStat(Object state)
+        {
+            var msg = "";
+            if (state is NetServer ns)
+                msg = ns.GetStat();
+            else if (state is ISocketRemote ss)
+                msg = ss.GetStat();
+
+            Console.Title = msg;
         }
     }
 }
