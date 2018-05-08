@@ -56,6 +56,7 @@ namespace EchoTest
         static void TestClient()
         {
             var uri = new NetUri("tcp://127.0.0.1:1234");
+            //var uri = new NetUri("tcp://net.newlifex.com:1234");
             var client = uri.CreateRemote();
             client.Log = XTrace.Log;
             client.Received += (s, e) =>
