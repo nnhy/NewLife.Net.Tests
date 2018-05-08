@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoTest", "EchoTest\EchoTest.csproj", "{3DB359DE-A7AF-4B62-AC4D-E662BD53D570}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoAgent", "EchoAgent\EchoAgent.csproj", "{43C581A2-C376-4145-9029-9916FA1E6D02}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3DB359DE-A7AF-4B62-AC4D-E662BD53D570}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DB359DE-A7AF-4B62-AC4D-E662BD53D570}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DB359DE-A7AF-4B62-AC4D-E662BD53D570}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43C581A2-C376-4145-9029-9916FA1E6D02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43C581A2-C376-4145-9029-9916FA1E6D02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43C581A2-C376-4145-9029-9916FA1E6D02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43C581A2-C376-4145-9029-9916FA1E6D02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
