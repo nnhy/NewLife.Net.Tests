@@ -8,9 +8,9 @@ namespace Benchmark
         #region 属性
         public String Address { get; set; }
 
-        public Int32 Times { get; set; }
+        public Int32 Times { get; set; } = 10000;
 
-        public Int32 Thread { get; set; }
+        public Int32 Thread { get; set; } = 100;
 
         public String Content { get; set; }
         #endregion

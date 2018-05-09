@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using NewLife.Data;
 using NewLife.Log;
 using NewLife.Net;
 using NewLife.Reflection;
@@ -54,6 +56,7 @@ namespace Benchmark
         {
             var uri = new NetUri(cfg.Address);
             if (cfg.Content.IsNullOrEmpty()) cfg.Content = "学无先后达者为师";
+            var pk = new Packet(cfg.Content.GetBytes());
 
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("NewLife.NC v{0}", AssemblyX.Entry.Version);
@@ -62,9 +65,33 @@ namespace Benchmark
             Console.WriteLine("目标：{0}", uri);
             Console.WriteLine("请求：{0:n0}", cfg.Times);
             Console.WriteLine("并发：{0:n0}", cfg.Thread);
-            var buf = cfg.Content.GetBytes();
-            Console.WriteLine("并发：[{0:n0}] {1}", buf.Length, cfg.Content);
+            Console.WriteLine("并发：[{0:n0}] {1}", pk.Count, cfg.Content);
             Console.ResetColor();
+            Console.WriteLine();
+
+            // 多线程
+            var ts = new List<Task>();
+            var total = 0;
+            for (var i = 0; i < cfg.Thread; i++)
+            {
+                var tsk = Task.Run(() =>
+                {
+                    try
+                    {
+                        var client = uri.CreateRemote();
+                        client.Open();
+                        for (var k = 0; k < cfg.Times; k++)
+                        {
+                            client.Send(pk);
+                            Interlocked.Increment(ref total);
+                        }
+                    }
+                    catch { }
+                });
+                ts.Add(tsk);
+            }
+            Task.WaitAll(ts.ToArray());
+            Console.WriteLine("完成：{0:n0}", total);
         }
     }
 }
