@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -69,6 +70,8 @@ namespace Benchmark
             Console.ResetColor();
             Console.WriteLine();
 
+            var sw = Stopwatch.StartNew();
+
             // 多线程
             var ts = new List<Task>();
             var total = 0;
@@ -91,7 +94,13 @@ namespace Benchmark
                 ts.Add(tsk);
             }
             Task.WaitAll(ts.ToArray());
+
+            sw.Stop();
+
             Console.WriteLine("完成：{0:n0}", total);
+
+            var ms = sw.Elapsed.TotalMilliseconds;
+            Console.WriteLine("速度：{0:n0}tps", total * 1000L / ms);
         }
     }
 }
