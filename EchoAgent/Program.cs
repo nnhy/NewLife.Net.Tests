@@ -28,7 +28,8 @@ namespace EchoAgent
             Description = "这是NewLife.Net的一个回声服务示例！";
 
             // 准备两个工作线程，分别负责输出日志和向客户端发送时间
-            ThreadCount = 2;
+            //ThreadCount = 2;
+            ThreadCount = 1;
             Intervals = new[] { 1, 5 };
         }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using NewLife.Net;
 
 namespace EchoAgent
@@ -26,7 +25,7 @@ namespace EchoAgent
         /// <param name="e"></param>
         protected override void OnReceive(ReceivedEventArgs e)
         {
-            WriteLog("收到：{0}", e.Packet.ToStr());
+            //WriteLog("收到：{0}", e.Packet.ToStr());
 
             // 把收到的数据发回去
             Send(e.Packet);
