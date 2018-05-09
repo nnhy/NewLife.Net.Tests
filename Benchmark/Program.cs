@@ -74,7 +74,7 @@ namespace Benchmark
             var total = 0;
             for (var i = 0; i < cfg.Thread; i++)
             {
-                var tsk = Task.Run(() =>
+                var tsk = Task.Factory.StartNew(() =>
                 {
                     try
                     {
@@ -87,7 +87,7 @@ namespace Benchmark
                         }
                     }
                     catch { }
-                });
+                }, TaskCreationOptions.LongRunning);
                 ts.Add(tsk);
             }
             Task.WaitAll(ts.ToArray());
