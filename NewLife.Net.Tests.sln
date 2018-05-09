@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoTest", "EchoTest\EchoTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoAgent", "EchoAgent\EchoAgent.csproj", "{43C581A2-C376-4145-9029-9916FA1E6D02}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark", "Benchmark\Benchmark.csproj", "{91AA2684-A6ED-455C-8342-0652492BA25A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{43C581A2-C376-4145-9029-9916FA1E6D02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43C581A2-C376-4145-9029-9916FA1E6D02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43C581A2-C376-4145-9029-9916FA1E6D02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91AA2684-A6ED-455C-8342-0652492BA25A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91AA2684-A6ED-455C-8342-0652492BA25A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91AA2684-A6ED-455C-8342-0652492BA25A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91AA2684-A6ED-455C-8342-0652492BA25A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
