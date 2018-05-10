@@ -14,7 +14,7 @@ namespace HandlerTest
             session.WriteLog("收到：{0}", pk.ToStr());
 
             // 把收到的数据发回去
-            session.Send(pk);
+            session.SendAsync(pk);
 
             return null;
         }

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NewLife.Data;
 using NewLife.Log;
 using NewLife.Net;
 using NewLife.Net.Handlers;
@@ -45,8 +42,15 @@ namespace HandlerTest
                 Port = 1234,
                 Log = XTrace.Log
             };
-            svr.Add(new LengthFieldCodec { Size = 4 });
+            //svr.Add(new LengthFieldCodec { Size = 4 });
+            svr.Add<StandardCodec>();
             svr.Add<EchoHandler>();
+
+            // 打开原始数据日志
+            var ns = svr.Server;
+            ns.LogSend = true;
+            ns.LogReceive = true;
+
             svr.Start();
 
             _server = svr;
@@ -63,9 +67,17 @@ namespace HandlerTest
             client.Log = XTrace.Log;
             client.Received += (s, e) =>
             {
-                XTrace.WriteLine("收到：{0}", e.Packet.ToStr());
+                var pk = e.Message as Packet;
+                XTrace.WriteLine("收到：{0}", pk.ToStr());
             };
-            client.Add(new LengthFieldCodec { Size = 4 });
+            //client.Add(new LengthFieldCodec { Size = 4 });
+            client.Add<StandardCodec>();
+
+            // 打开原始数据日志
+            var ns = client;
+            ns.LogSend = true;
+            ns.LogReceive = true;
+
             client.Open();
 
             // 定时显示性能数据
@@ -74,13 +86,16 @@ namespace HandlerTest
             // 循环发送数据
             for (var i = 0; i < 5; i++)
             {
-                //Thread.Sleep(1000);
-
                 var str = "你好" + (i + 1);
-                client.Send(str);
+                var pk = new Packet(str.GetBytes());
+                client.SendAsync(pk);
             }
+        }
 
-            //client.Dispose();
+        class User
+        {
+            public Int32 ID { get; set; }
+            public String Name { get; set; }
         }
 
         static void ShowStat(Object state)
