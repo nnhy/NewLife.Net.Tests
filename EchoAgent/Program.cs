@@ -1,25 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NewLife;
+﻿using NewLife;
 using NewLife.Agent;
 using NewLife.Log;
 using NewLife.Net;
+using System;
 
 namespace EchoAgent
 {
-    class Program
+    internal class Program
     {
-        static void Main(String[] args)
+        private static void Main(String[] args)
         {
             // 引导进入我的服务控制类
             MyService.ServiceMain();
         }
     }
 
-    class MyService : AgentServiceBase<MyService>
+    internal class MyService : AgentServiceBase<MyService>
     {
         public MyService()
         {
@@ -33,7 +29,9 @@ namespace EchoAgent
             Intervals = new[] { 1, 5 };
         }
 
-        MyNetServer _Server;
+        private MyNetServer _server;
+
+        /// <inheritdoc />
         /// <summary>开始服务</summary>
         /// <param name="reason"></param>
         protected override void StartWork(String reason)
@@ -46,21 +44,23 @@ namespace EchoAgent
             };
             svr.Start();
 
-            _Server = svr;
+            _server = svr;
 
             base.StartWork(reason);
         }
 
+        /// <inheritdoc />
         /// <summary>停止服务</summary>
         /// <param name="reason"></param>
         protected override void StopWork(String reason)
         {
-            _Server.TryDispose();
-            _Server = null;
+            _server.TryDispose();
+            _server = null;
 
             base.StopWork(reason);
         }
 
+        /// <inheritdoc />
         /// <summary>调度器让每个任务线程定时执行Work，index标识任务</summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -68,13 +68,14 @@ namespace EchoAgent
         {
             switch (index)
             {
-                case 0: ShowStat(_Server); break;
-                case 1: SendTime(_Server); break;
+                case 0: ShowStat(_server); break;
+                case 1: SendTime(_server); break;
             }
             return false;
         }
 
         private String _last;
+
         /// <summary>显示服务端状态</summary>
         /// <param name="ns"></param>
         private void ShowStat(NetServer ns)
@@ -89,7 +90,7 @@ namespace EchoAgent
 
         /// <summary>向所有客户端发送时间</summary>
         /// <param name="ns"></param>
-        private void SendTime(NetServer ns)
+        private static void SendTime(NetServer ns)
         {
             var str = DateTime.Now.ToFullString() + Environment.NewLine;
             var buf = str.GetBytes();

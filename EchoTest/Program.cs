@@ -1,23 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using NewLife.Log;
+﻿using NewLife.Log;
 using NewLife.Net;
 using NewLife.Threading;
+using System;
+using System.Threading;
 
 namespace EchoTest
 {
-    class Program
+    internal class Program
     {
-        static void Main(String[] args)
+        private static String _port;
+        private static TimerX _timer;
+        private static NetServer _server;
+
+        private static void Main(String[] args)
         {
             XTrace.UseConsole();
 
             try
             {
+                Console.Write("请输入需要连接的端口号：");
+                _port = Console.ReadLine();
+                Console.WriteLine();
                 Console.Write("请选择运行模式：1，服务端；2，客户端  ");
                 var ch = Console.ReadKey().KeyChar;
                 Console.WriteLine();
@@ -35,14 +38,12 @@ namespace EchoTest
             Console.ReadKey();
         }
 
-        static TimerX _timer;
-        static NetServer _server;
-        static void TestServer()
+        private static void TestServer()
         {
             // 实例化服务端，指定端口，同时在Tcp/Udp/IPv4/IPv6上监听
             var svr = new MyNetServer
             {
-                Port = 1234,
+                Port = _port.ToInt(),
                 Log = XTrace.Log
             };
             svr.Start();
@@ -53,9 +54,9 @@ namespace EchoTest
             _timer = new TimerX(ShowStat, svr, 100, 1000);
         }
 
-        static void TestClient()
+        private static void TestClient()
         {
-            var uri = new NetUri("tcp://127.0.0.1:1234");
+            var uri = new NetUri("tcp://127.0.0.1:" + _port);
             //var uri = new NetUri("tcp://net.newlifex.com:1234");
             var client = uri.CreateRemote();
             client.Log = XTrace.Log;
@@ -80,14 +81,18 @@ namespace EchoTest
             client.Dispose();
         }
 
-        static void ShowStat(Object state)
+        private static void ShowStat(object state)
         {
-            var msg = "";
-            if (state is NetServer ns)
-                msg = ns.GetStat();
-            else if (state is ISocketRemote ss)
-                msg = ss.GetStat();
-
+            var msg = String.Empty;
+            switch (state)
+            {
+                case NetServer ns:
+                    msg = "Server：" + ns.GetStat();
+                    break;
+                case ISocketRemote ss:
+                    msg = "Remote：" + ss.GetStat();
+                    break;
+            }
             Console.Title = msg;
         }
     }

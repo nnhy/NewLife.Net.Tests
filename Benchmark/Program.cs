@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using NewLife.Data;
+﻿using NewLife.Data;
 using NewLife.Log;
 using NewLife.Net;
 using NewLife.Reflection;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Benchmark
 {
-    class Program
+    internal class Program
     {
-        static void Main(String[] args)
+        private static void Main(String[] args)
         {
             XTrace.UseConsole();
 
@@ -41,7 +38,7 @@ namespace Benchmark
             //Console.ReadKey();
         }
 
-        static void ShowHelp()
+        private static void ShowHelp()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
 
@@ -53,7 +50,7 @@ namespace Benchmark
             Console.ResetColor();
         }
 
-        static void Work(Config cfg)
+        private static void Work(Config cfg)
         {
             var uri = new NetUri(cfg.Address);
             if (cfg.Content.IsNullOrEmpty()) cfg.Content = "学无先后达者为师";

@@ -1,16 +1,19 @@
-﻿using System;
-using NewLife.Net;
+﻿using NewLife.Net;
+using System;
 
 namespace EchoAgent
 {
+    /// <inheritdoc />
     /// <summary>定义服务端，用于管理所有网络会话</summary>
-    class MyNetServer : NetServer<MyNetSession>
+    internal class MyNetServer : NetServer<MyNetSession>
     {
     }
 
+    /// <inheritdoc />
     /// <summary>定义会话。每一个远程连接唯一对应一个网络会话，再次重复收发信息</summary>
-    class MyNetSession : NetSession<MyNetServer>
+    internal class MyNetSession : NetSession<MyNetServer>
     {
+        /// <inheritdoc />
         /// <summary>客户端连接</summary>
         public override void Start()
         {
@@ -21,6 +24,7 @@ namespace EchoAgent
             Send(str);
         }
 
+        /// <inheritdoc />
         /// <summary>收到客户端数据</summary>
         /// <param name="e"></param>
         protected override void OnReceive(ReceivedEventArgs e)

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Benchmark
 {
-    class Config
+    internal class Config
     {
         #region 属性
         public String Address { get; set; }
@@ -46,7 +46,7 @@ namespace Benchmark
             }
 
             var str = args.LastOrDefault();
-            if (!str.StartsWith("-")) Address = str;
+            if (str != null && !str.StartsWith("-")) Address = str;
         }
     }
 }
