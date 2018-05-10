@@ -1,10 +1,14 @@
 ﻿using System;
-using System.Threading;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using NewLife.Log;
 using NewLife.Net;
+using NewLife.Net.Handlers;
 using NewLife.Threading;
 
-namespace EchoTest
+namespace HandlerTest
 {
     class Program
     {
@@ -36,11 +40,13 @@ namespace EchoTest
         static void TestServer()
         {
             // 实例化服务端，指定端口，同时在Tcp/Udp/IPv4/IPv6上监听
-            var svr = new MyNetServer
+            var svr = new NetServer
             {
                 Port = 1234,
                 Log = XTrace.Log
             };
+            svr.Add(new LengthFieldCodec { Size = 4 });
+            svr.Add<EchoHandler>();
             svr.Start();
 
             _server = svr;
@@ -59,6 +65,7 @@ namespace EchoTest
             {
                 XTrace.WriteLine("收到：{0}", e.Packet.ToStr());
             };
+            client.Add(new LengthFieldCodec { Size = 4 });
             client.Open();
 
             // 定时显示性能数据
@@ -67,13 +74,13 @@ namespace EchoTest
             // 循环发送数据
             for (var i = 0; i < 5; i++)
             {
-                Thread.Sleep(1000);
+                //Thread.Sleep(1000);
 
                 var str = "你好" + (i + 1);
                 client.Send(str);
             }
 
-            client.Dispose();
+            //client.Dispose();
         }
 
         static void ShowStat(Object state)

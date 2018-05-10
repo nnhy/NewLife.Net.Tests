@@ -2,7 +2,7 @@
 using NewLife.Data;
 using NewLife.Net.Handlers;
 
-namespace EchoTest
+namespace HandlerTest
 {
     class EchoHandler : Handler
     {

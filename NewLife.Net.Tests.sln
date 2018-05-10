@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoAgent", "EchoAgent\Echo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark", "Benchmark\Benchmark.csproj", "{91AA2684-A6ED-455C-8342-0652492BA25A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandlerTest", "HandlerTest\HandlerTest.csproj", "{2B0F788D-9BC7-4AF6-99C6-85C9344FF6EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{91AA2684-A6ED-455C-8342-0652492BA25A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91AA2684-A6ED-455C-8342-0652492BA25A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91AA2684-A6ED-455C-8342-0652492BA25A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B0F788D-9BC7-4AF6-99C6-85C9344FF6EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B0F788D-9BC7-4AF6-99C6-85C9344FF6EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B0F788D-9BC7-4AF6-99C6-85C9344FF6EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B0F788D-9BC7-4AF6-99C6-85C9344FF6EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
