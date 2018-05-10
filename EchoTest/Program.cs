@@ -40,11 +40,12 @@ namespace EchoTest
         static void TestServer()
         {
             // 实例化服务端，指定端口，同时在Tcp/Udp/IPv4/IPv6上监听
-            var svr = new MyNetServer
+            var svr = new NetServer
             {
                 Port = 1234,
                 Log = XTrace.Log
             };
+            svr.Add<EchoHandler>();
             svr.Start();
 
             _server = svr;
