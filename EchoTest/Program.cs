@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using NewLife.Log;
 using NewLife.Net;
 using NewLife.Threading;
@@ -72,13 +68,13 @@ namespace EchoTest
             // 循环发送数据
             for (var i = 0; i < 5; i++)
             {
-                Thread.Sleep(1000);
+                //Thread.Sleep(1000);
 
                 var str = "你好" + (i + 1);
                 client.Send(str);
             }
 
-            client.Dispose();
+            //client.Dispose();
         }
 
         static void ShowStat(Object state)
