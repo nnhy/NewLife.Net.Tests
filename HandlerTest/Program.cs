@@ -88,7 +88,7 @@ namespace HandlerTest
             {
                 var str = "你好" + (i + 1);
                 var pk = new Packet(str.GetBytes());
-                client.SendAsync(pk);
+                client.SendMessageAsync(pk);
             }
         }
 
