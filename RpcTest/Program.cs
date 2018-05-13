@@ -59,7 +59,7 @@ namespace RpcTest
             _server = svr;
 
             // 定时显示性能数据
-            _timer = new TimerX(ShowStat, svr, 100, 1000);
+            _timer = new TimerX(ShowStat, ns, 100, 1000);
         }
 
         static async void TestClient()
@@ -72,6 +72,7 @@ namespace RpcTest
 
             // 打开原始数据日志
             var ns = client.Client;
+            ns.Log = XTrace.Log;
             ns.LogSend = true;
             ns.LogReceive = true;
 
@@ -79,25 +80,25 @@ namespace RpcTest
             client.Open();
 
             // 定时显示性能数据
-            _timer = new TimerX(ShowStat, client, 100, 1000);
+            _timer = new TimerX(ShowStat, ns, 100, 1000);
 
             // 标准服务，Json
-            var n = await client.Add(1245, 3456);
+            var n = await client.AddAsync(1245, 3456);
             XTrace.WriteLine("Add: {0}", n);
 
             // 高速服务，二进制
             var buf = "Hello".GetBytes();
-            var pk = await client.RC4(buf);
+            var pk = await client.RC4Async(buf);
             XTrace.WriteLine("RC4: {0}", pk.ToHex());
 
             // 返回对象
-            var user = await client.FindUser(123, true);
-            XTrace.WriteLine("FindUser: ID={0} Name={1} Enable={2} CreateTime={3}");
+            var user = await client.FindUserAsync(123, true);
+            XTrace.WriteLine("FindUser: ID={0} Name={1} Enable={2} CreateTime={3}", user.ID, user.Name, user.Enable, user.CreateTime);
 
             // 拦截异常
             try
             {
-                user = await client.FindUser(123, true);
+                user = await client.FindUserAsync(123, true);
             }
             catch (ApiException ex)
             {
