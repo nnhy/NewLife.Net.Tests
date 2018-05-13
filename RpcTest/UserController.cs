@@ -16,7 +16,7 @@ namespace RpcTest
         public User FindByID(Int32 uid, Boolean deleted)
         {
             // Session 用法同Web
-            var times = (Int32)Session["Times"];
+            var times = Session["Times"].ToInt();
             times++;
             Session["Times"] = times;
 
@@ -52,7 +52,7 @@ namespace RpcTest
 
             foreach (var item in ps)
             {
-                if (!cs.ContainsKey(item.Key))
+                if (cs != null && !cs.ContainsKey(item.Key))
                     XTrace.WriteLine("服务[{0}]未能找到匹配参数 {1}={2}", filterContext.ActionName, item.Key, item.Value);
             }
         }
@@ -62,7 +62,7 @@ namespace RpcTest
         public void OnActionExecuted(ControllerContext filterContext)
         {
             var ex = filterContext.Exception;
-            if (!filterContext.ExceptionHandled)
+            if (ex != null && !filterContext.ExceptionHandled)
             {
                 XTrace.WriteLine("控制器拦截到异常：{0}", ex.Message);
             }

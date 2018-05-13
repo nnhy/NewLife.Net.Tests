@@ -1,6 +1,5 @@
 ﻿using System;
 using NewLife.Data;
-using NewLife.Remoting;
 
 namespace RpcTest
 {

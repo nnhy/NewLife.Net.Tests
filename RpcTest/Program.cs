@@ -82,7 +82,7 @@ namespace RpcTest
             _timer = new TimerX(ShowStat, client, 100, 1000);
 
             // 标准服务，Json
-            var n = await client.Add(12, 34);
+            var n = await client.Add(1245, 3456);
             XTrace.WriteLine("Add: {0}", n);
 
             // 高速服务，二进制

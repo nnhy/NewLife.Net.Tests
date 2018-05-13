@@ -5,6 +5,14 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\BinRpc</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\BinRpc</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="NewLife.Core" Version="7.0.6706.39251" />
   </ItemGroup>
