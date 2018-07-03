@@ -70,17 +70,20 @@ namespace RpcTest
             client.Encoder = new JsonEncoder();
             client.EncoderLog = XTrace.Log;
 
-            // 打开原始数据日志
-            var ns = client.Client;
-            ns.Log = XTrace.Log;
-            ns.LogSend = true;
-            ns.LogReceive = true;
+            //// 打开原始数据日志
+            //var ns = client.Client;
+            //ns.Log = XTrace.Log;
+            //ns.LogSend = true;
+            //ns.LogReceive = true;
+
+            // 定时显示性能数据
+            client.StatPeriod = 5;
 
             client.Log = XTrace.Log;
             client.Open();
 
             // 定时显示性能数据
-            _timer = new TimerX(ShowStat, ns, 100, 1000);
+            //_timer = new TimerX(ShowStat, ns, 100, 1000);
 
             // 标准服务，Json
             var n = await client.AddAsync(1245, 3456);
