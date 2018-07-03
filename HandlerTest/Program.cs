@@ -34,8 +34,11 @@ namespace HandlerTest
 
         static TimerX _timer;
         static NetServer _server;
+        static PerfCounter _counter;
         static void TestServer()
         {
+            _counter = new PerfCounter();
+
             // 实例化服务端，指定端口，同时在Tcp/Udp/IPv4/IPv6上监听
             var svr = new NetServer
             {
@@ -44,19 +47,23 @@ namespace HandlerTest
             };
             //svr.Add(new LengthFieldCodec { Size = 4 });
             svr.Add<StandardCodec>();
-            svr.Add<EchoHandler>();
+            //svr.Add<EchoHandler>();
+            svr.Add(new EchoHandler { Counter = _counter });
 
+#if DEBUG
             // 打开原始数据日志
             var ns = svr.Server;
+            ns.Log = XTrace.Log;
             ns.LogSend = true;
             ns.LogReceive = true;
+#endif
 
             svr.Start();
 
             _server = svr;
 
             // 定时显示性能数据
-            _timer = new TimerX(ShowStat, svr, 100, 1000);
+            _timer = new TimerX(ShowStat, svr, 100, 1000) { Async = true };
         }
 
         static void TestClient()
@@ -81,7 +88,7 @@ namespace HandlerTest
             client.Open();
 
             // 定时显示性能数据
-            _timer = new TimerX(ShowStat, client, 100, 1000);
+            _timer = new TimerX(ShowStat, client, 100, 1000) { Async = true };
 
             // 循环发送数据
             for (var i = 0; i < 5; i++)
@@ -98,15 +105,20 @@ namespace HandlerTest
             public String Name { get; set; }
         }
 
+        private static String _last;
         static void ShowStat(Object state)
         {
             var msg = "";
             if (state is NetServer ns)
-                msg = ns.GetStat();
+                msg = "处理：" + _counter + " " + ns.GetStat();
             else if (state is ISocketRemote ss)
                 msg = ss.GetStat();
 
-            Console.Title = msg;
+            if (msg == _last) return;
+            _last = msg;
+
+            //Console.Title = msg;
+            XTrace.WriteLine(msg);
         }
     }
 }

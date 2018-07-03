@@ -38,16 +38,16 @@ namespace Benchmark
             }
 
             //Console.WriteLine("OK!");
-            //Console.ReadKey();
+            Console.ReadKey();
         }
 
         static void ShowHelp()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
 
-            Console.WriteLine("压力测试工具：nc [-c 10] [-n 1000] [-s content] tcp://127.0.0.1:1234");
-            Console.WriteLine("\t-c\t并发数。默认10用户");
-            Console.WriteLine("\t-n\t请求数。每用户请求数");
+            Console.WriteLine("压力测试工具：nc [-c 100] [-n 10000] [-s content] tcp://127.0.0.1:1234");
+            Console.WriteLine("\t-c\t并发数。默认100用户");
+            Console.WriteLine("\t-n\t请求数。默认每用户请求10000次");
             Console.WriteLine("\t-s\t字符串内容。支持0x开头十六进制");
 
             Console.ResetColor();
