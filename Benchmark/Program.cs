@@ -45,10 +45,10 @@ namespace Benchmark
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
 
-            Console.WriteLine("压力测试工具：nc [-n 1000] [-c 10] [-s] tcp://127.0.0.1:1234");
-            Console.WriteLine("\t-n\t请求数");
-            Console.WriteLine("\t-c\t并发数");
-            Console.WriteLine("\t-s\t字符串内容");
+            Console.WriteLine("压力测试工具：nc [-c 10] [-n 1000] [-s content] tcp://127.0.0.1:1234");
+            Console.WriteLine("\t-c\t并发数。默认10用户");
+            Console.WriteLine("\t-n\t请求数。每用户请求数");
+            Console.WriteLine("\t-s\t字符串内容。支持0x开头十六进制");
 
             Console.ResetColor();
         }
@@ -56,8 +56,11 @@ namespace Benchmark
         static void Work(Config cfg)
         {
             var uri = new NetUri(cfg.Address);
-            if (cfg.Content.IsNullOrEmpty()) cfg.Content = "学无先后达者为师";
-            var pk = new Packet(cfg.Content.GetBytes());
+            var txt = cfg.Content;
+            if (txt.IsNullOrEmpty()) txt = cfg.Content = "学无先后达者为师";
+
+            var buf = txt.StartsWith("0x") ? txt.TrimStart("0x").ToHex() : txt.GetBytes();
+            var pk = new Packet(buf);
 
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("NewLife.NC v{0}", AssemblyX.Entry.Version);
@@ -66,7 +69,7 @@ namespace Benchmark
             Console.WriteLine("目标：{0}", uri);
             Console.WriteLine("请求：{0:n0}", cfg.Times);
             Console.WriteLine("并发：{0:n0}", cfg.Thread);
-            Console.WriteLine("并发：[{0:n0}] {1}", pk.Count, cfg.Content);
+            Console.WriteLine("内容：[{0:n0}] {1}", pk.Count, txt);
             Console.ResetColor();
             Console.WriteLine();
 
