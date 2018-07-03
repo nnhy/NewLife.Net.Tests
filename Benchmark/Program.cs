@@ -38,7 +38,7 @@ namespace Benchmark
             }
 
             //Console.WriteLine("OK!");
-            Console.ReadKey();
+            //Console.ReadKey();
         }
 
         static void ShowHelp()
@@ -91,8 +91,9 @@ namespace Benchmark
                             client.Send(pk);
                             Interlocked.Increment(ref total);
                         }
+                        return client;
                     }
-                    catch { }
+                    catch { return null; }
                 }, TaskCreationOptions.LongRunning);
                 ts.Add(tsk);
             }
@@ -104,6 +105,9 @@ namespace Benchmark
 
             var ms = sw.Elapsed.TotalMilliseconds;
             Console.WriteLine("速度：{0:n0}tps", total * 1000L / ms);
+
+            //Thread.Sleep(5000);
+            Console.ReadKey(true);
         }
     }
 }
