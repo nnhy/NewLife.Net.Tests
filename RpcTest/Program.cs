@@ -48,7 +48,8 @@ namespace RpcTest
             svr.EncoderLog = XTrace.Log;
 
             // 打开原始数据日志
-            var ns = svr.Server as NetServer;
+            var ns =  svr.EnsureCreate() as NetServer;
+            //var ns = svr.Server as NetServer;
             ns.Log = XTrace.Log;
             ns.LogSend = true;
             ns.LogReceive = true;
