@@ -1,7 +1,7 @@
 ﻿using System;
 using NewLife.Data;
 using NewLife.Log;
-using NewLife.Net.Handlers;
+using NewLife.Model;
 
 namespace HandlerTest
 {
@@ -12,7 +12,8 @@ namespace HandlerTest
 
         public override Object Read(IHandlerContext context, Object message)
         {
-            var session = context.Session;
+            var ctx = context as NetHandlerContext;
+            var session = ctx.Session;
 
             // 性能计数
             Counter?.Increment(1, 0);
