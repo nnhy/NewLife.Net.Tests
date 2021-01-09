@@ -28,10 +28,10 @@ namespace RpcTest
         {
             return await InvokeAsync<Packet>("My/RC4", pk);
         }
-
-        public async Task<User> FindUserAsync(Int32 uid, Boolean enable)
+      
+        public async Task<User> FindUserAsync(Int32 uid, Boolean deleted)
         {
-            return await InvokeAsync<User>("User/FindByID", new { uid, enable });
+            return await InvokeAsync<User>("User/FindByID", new { uid, deleted});
         }
     }
 }
