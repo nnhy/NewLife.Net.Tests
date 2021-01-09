@@ -1,3 +1,6 @@
+本库已全部转移到 https://github.com/NewLifeX/NewLife.Net
+
+
 # 网络库测试用例  
 X组件网络库一共经历了4代：  
 1，2005年，APM模型，反向代理、点卡服务端  
